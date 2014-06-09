@@ -1,5 +1,7 @@
 package com.gnox.memorygame;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -18,9 +20,11 @@ import android.widget.TableRow.LayoutParams;
  * to create TableRows, Buttons and whole formatted TableLayout.
  */
 public class GameLayoutManager {
-	Context context;
-	List<Drawable> imagesList;
-	Card[][] cards;
+	private Context context;
+	private List<Drawable> imagesList;
+	private Card[][] cards;
+	private Integer[] rand;
+	private int randPos = 0;
 
 	public GameLayoutManager(Context context) {
 		this.context = context;
@@ -72,12 +76,7 @@ public class GameLayoutManager {
 		row.setGravity(Gravity.CENTER);
 
 		// exactly what function says, adding buttons to created TableRow
-		try {
-			addButtonsToRow(row, params, actRow);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		addButtonsToRow(row, params, actRow);
 
 		return row;
 
@@ -93,28 +92,18 @@ public class GameLayoutManager {
 	 *            Parameters of buttons.
 	 * @param actRow
 	 *            Row, that is being worked with
-	 * @throws Exception
-	 *             Exception is thrown when images were not loaded
 	 */
 	@SuppressLint("NewApi")
-	private void addButtonsToRow(TableRow row, LayoutParams params, int actRow) throws Exception {
+	private void addButtonsToRow(TableRow row, LayoutParams params, int actRow) {
 		for (int actColumn = 0; actColumn < Game.ROWS; actColumn++) {
 			Button button = new Button(context);
-
-			// if images list is not set, then throw Exception
-			if (imagesList != null)
-				button.setBackground(imagesList.get(0));
-			else
-				throw new Exception("Images are not set.");
 
 			button.setLayoutParams(params);
 
 			// adding buttons to row
 			row.addView(button);
 
-			// TODO
-			// make cards use different pictures
-			Card card = new Card(button, imagesList.get(1));
+			Card card = new Card(button, imagesList.get(nextRandomNumber()));
 
 			// adding cards into two dimensional array
 			cards[actRow][actColumn] = card;
@@ -132,6 +121,16 @@ public class GameLayoutManager {
 		int actRow = 0;
 		cards = new Card[Game.COLUMNS][Game.ROWS];
 
+		// creating pair of random numbers for inserting images into their
+		// respective buttons
+		rand = new Integer[(Game.COLUMNS * Game.ROWS)];
+		for (int i = 0, j = 0; i < rand.length / 2; i++) {
+			rand[j++] = i;
+			rand[j++] = i;
+		}
+
+		Collections.shuffle(Arrays.asList(rand));
+
 		TableLayout gameField = new TableLayout(context);
 
 		// add TableRows into gameField TableLayout and incrementation of actRow
@@ -145,6 +144,10 @@ public class GameLayoutManager {
 
 	public void setImagesList(List<Drawable> imagesList) {
 		this.imagesList = imagesList;
+	}
+
+	private int nextRandomNumber() {
+		return rand[randPos++];
 	}
 
 }

@@ -1,12 +1,19 @@
 package com.gnox.memorygame;
 
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+
+import android.os.Handler;
+import android.util.Log;
+
 /**
  * Class for managing the cards, their flipping and comparing.
  */
 public class CardManager {
-	Card first;
-	Card second;
-	boolean bothSet;
+	Card first = null;
+	Card second = null;
+	static Object lock = new Object();
 
 	/**
 	 * Setting cards for comparation. If there is no first card selected, then
@@ -17,47 +24,43 @@ public class CardManager {
 	 *            Card that should be set.
 	 */
 	public void set(Card card) {
+
+		card.flip();
 		if (first == null)
-			setFirst(card);
+			first = card;
+		else if (first == card)
+			;
 		else {
-			setSecond(card);
-			checkPair();
+			checkPair(card);
+			first = null;
 		}
-	}
 
-	/**
-	 * Sets the first card.
-	 * 
-	 * @param Card
-	 *            First card that will be flipped.
-	 */
-	public void setFirst(Card first) {
-		first.flip();
-		this.first = first;
-	}
-
-	/**
-	 * Sets the second card
-	 * 
-	 * @param Card
-	 *            Second card that will be set and flipped.
-	 */
-	public void setSecond(Card second) {
-		second.flip();
-		this.second = second;
 	}
 
 	/**
 	 * Function checks if cards has the same image. If they do, then it disables
 	 * buttons. If they don't have same image, then function flips them to back.
 	 */
-	public void checkPair() {
-		if (first.checkPair(second)) {
+	public void checkPair(final Card card) {
+		if (first.checkPair(card)) {
+			Log.d("checkPair()", "Check passed");
 			first.disable();
-			second.disable();
+			card.disable();
 		} else {
-			first.flipBack();
-			second.flipBack();
+			Log.d("checkPair()", "Check did not pass");
+			
+			Handler handler = new Handler();
+			final CardManager self = this;
+			handler.postDelayed(new Runnable() {
+				Card first = self.first;
+				Card c = card;
+
+				@Override
+				public void run() {
+					first.flipBack();
+					c.flipBack();
+				}
+			}, 1000);
 		}
 	}
 }

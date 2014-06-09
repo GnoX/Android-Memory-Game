@@ -18,6 +18,7 @@ public class Card {
 	private Card self = this;
 
 	public Card(Button button, Drawable frontSide) {
+		button.setBackground(Game.backSide);
 		this.button = button;
 		this.frontSide = frontSide;
 		this.button.setOnClickListener(new OnClickListener() {
@@ -28,7 +29,12 @@ public class Card {
 				// same
 				Game.cardManager.set(self);
 			}
+
 		});
+	}
+
+	public void setBackground(Drawable background) {
+		button.setBackground(background);
 	}
 
 	/**
@@ -64,5 +70,10 @@ public class Card {
 	 */
 	public void disable() {
 		button.setEnabled(false);
+		button.setVisibility(View.INVISIBLE);
+	}
+
+	public void refresh() {
+		button.postInvalidate();
 	}
 }

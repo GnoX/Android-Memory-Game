@@ -1,9 +1,9 @@
 package com.gnox.memorygame;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.TableLayout;
@@ -11,33 +11,40 @@ import android.widget.TableLayout;
 public class Game extends Activity {
 
 	private GameLayoutManager layoutManager;
-	private List<Drawable> images;
+	private ImageLoader imgLoader;
 	public static CardManager cardManager;
+	public List<Bitmap> bMapList;
 
 	// Back side of Cards
 	public static Drawable backSide;
 	public static int COLUMNS;
 	public static int ROWS;
 
-	TableLayout mainTable;
+	static TableLayout mainTable;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
 
-		loadImages();
+		initialize();
+
+		newGame(4, 4);
+	}
+
+	/**
+	 * Objects initialization
+	 */
+	private void initialize() {
+		imgLoader = new ImageLoader(getResources());
 
 		mainTable = (TableLayout) findViewById(R.id.mainTable);
 
 		layoutManager = new GameLayoutManager(this);
-		layoutManager.setImagesList(images);
 
 		cardManager = new CardManager();
 
 		backSide = getResources().getDrawable(R.drawable.card1);
-
-		newGame(6, 6);
 	}
 
 	/**
@@ -52,18 +59,17 @@ public class Game extends Activity {
 		COLUMNS = columns;
 		ROWS = rows;
 
+		imgLoader.setImageFrame(R.drawable.cards, 4, 4);
+		for (int i = 0; i < 4; i++)
+			for (int j = 0; j < 4; j++)
+				if (!(i == 3 && j == 2 || j == 3))
+					imgLoader.addCroppedImage(i, j);
+
+		layoutManager.setImagesList(imgLoader.getImageList());
+
 		// adding view, which was created from layoutManager to main table
 		mainTable.addView(layoutManager.createGameField());
-	}
-
-	/**
-	 * Loads every image that will be used in project
-	 */
-	private void loadImages() {
-		images = new ArrayList<Drawable>();
-
-		images.add(getResources().getDrawable(R.drawable.card1));
-		images.add(getResources().getDrawable(R.drawable.cards));
 
 	}
+
 }
