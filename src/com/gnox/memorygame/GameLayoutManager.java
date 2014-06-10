@@ -103,10 +103,7 @@ public class GameLayoutManager {
 			// adding buttons to row
 			row.addView(button);
 
-			Card card = new Card(button, imagesList.get(nextRandomNumber()));
-
-			// adding cards into two dimensional array
-			cards[actRow][actColumn] = card;
+			new Card(button, imagesList.get(nextRandomNumber()));
 		}
 
 	}

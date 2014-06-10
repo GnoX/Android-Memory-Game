@@ -5,4 +5,18 @@
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}" >
 
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" >
+
+        <TextView
+            android:id="@+id/display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/turn" />
+
+    </TableRow>
+
 </TableLayout>

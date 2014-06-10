@@ -27,7 +27,8 @@ public class Card {
 				// we need to set the card in Card Manager so that it can
 				// determine if cards were turned and then check if they are
 				// same
-				Game.cardManager.set(self);
+				if (!Game.cardManager.stop)
+					Game.cardManager.set(self);
 			}
 
 		});

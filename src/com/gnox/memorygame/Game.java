@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.TableLayout;
+import android.widget.TextView;
 
 public class Game extends Activity {
 
@@ -14,6 +15,7 @@ public class Game extends Activity {
 	private ImageLoader imgLoader;
 	public static CardManager cardManager;
 	public List<Bitmap> bMapList;
+	static TextView display; 
 
 	// Back side of Cards
 	public static Drawable backSide;
@@ -29,7 +31,7 @@ public class Game extends Activity {
 
 		initialize();
 
-		newGame(4, 4);
+		newGame(4, 5);
 	}
 
 	/**
@@ -45,6 +47,8 @@ public class Game extends Activity {
 		cardManager = new CardManager();
 
 		backSide = getResources().getDrawable(R.drawable.card1);
+		
+		display = (TextView) findViewById(R.id.display);
 	}
 
 	/**
@@ -60,6 +64,7 @@ public class Game extends Activity {
 		ROWS = rows;
 
 		imgLoader.setImageFrame(R.drawable.cards, 4, 4);
+		
 		for (int i = 0; i < 4; i++)
 			for (int j = 0; j < 4; j++)
 				if (!(i == 3 && j == 2 || j == 3))
