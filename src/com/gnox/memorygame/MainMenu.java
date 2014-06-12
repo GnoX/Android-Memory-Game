@@ -13,13 +13,7 @@ public class MainMenu extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
 
-		// TODO
-		// Image switcher
-		// Size chooser
-		// Image cropper
-
 		Intent intent = new Intent(MainMenu.this, Game.class);
-		intent.putExtra("IMAGES", images);
 		startActivity(intent);
 	}
 

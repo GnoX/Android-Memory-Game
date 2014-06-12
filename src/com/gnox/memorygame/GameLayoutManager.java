@@ -20,11 +20,11 @@ import android.widget.TableRow.LayoutParams;
  * to create TableRows, Buttons and whole formatted TableLayout.
  */
 public class GameLayoutManager {
-	private Context context;
+	private final Context context;
 	private List<Drawable> imagesList;
-	private Card[][] cards;
 	private Integer[] rand;
-	private int randPos = 0;
+	private int randPos;
+	private int actRow = 0;
 
 	public GameLayoutManager(Context context) {
 		this.context = context;
@@ -39,8 +39,89 @@ public class GameLayoutManager {
 	 * @return TableRow that was inflated with buttons or null if no images are
 	 *         present
 	 */
-	@SuppressLint("NewApi")
 	private TableRow createTableRow(int actRow) {
+		// row that will be returned
+		TableRow row = new TableRow(context);
+
+		// centering buttons inside row
+		row.setGravity(Gravity.CENTER);
+
+		return row;
+
+	}
+
+	/**
+	 * Function is inflating buttons dynamically into <b> TableRow row</b>
+	 * according to number of columns and rows.
+	 * 
+	 * @param row
+	 *            Row, that will be inflated with buttons.
+	 * @param params
+	 *            Parameters of buttons.
+	 * @param actRow
+	 *            Row, that is being worked with
+	 */
+	@SuppressLint("NewApi")
+	private void addButtonsToRow(TableRow row) {
+		LayoutParams params = calculateLayoutParameters();
+		for (int actColumn = 0; actColumn < Game.ROWS; actColumn++) {
+			Button button = new Button(context);
+
+			button.setLayoutParams(params);
+
+			// adding buttons to row
+			row.addView(button);
+
+			new Card(button, imagesList.get(nextRandomNumber()));
+		}
+
+	}
+
+	/**
+	 * This function creates TableLayout which contains all columns and rows
+	 * that gamefield contains.
+	 * 
+	 * @return TableLayout containing whole game field.
+	 */
+	public TableLayout createGameField() {
+
+		// creating pair of random numbers for inserting images into their
+		// respective buttons
+		rand = new Integer[(Game.COLUMNS * Game.ROWS)];
+		randPos = 0;
+		for (int i = 0, j = 0; i < rand.length / 2; i++) {
+			rand[j++] = i;
+			rand[j++] = i;
+		}
+
+		Collections.shuffle(Arrays.asList(rand));
+
+		TableLayout gameField = new TableLayout(context);
+
+		// add TableRows into gameField TableLayout and incrementation of actRow
+		for (int i = 0; i < Game.COLUMNS; i++, actRow++) {
+			TableRow row = createTableRow(actRow);
+			addButtonsToRow(row);
+			gameField.addView(row);
+
+			// exactly what function says, adding buttons to created TableRow
+		}
+
+		gameField.setGravity(Gravity.CENTER);
+
+		return gameField;
+	}
+
+	public void setImagesList(List<Drawable> imagesList) {
+		this.imagesList = imagesList;
+	}
+
+	private int nextRandomNumber() {
+		return rand[randPos++];
+	}
+
+	@SuppressLint("NewApi")
+	private LayoutParams calculateLayoutParameters() {
 		// getting WindowManager to get size of screen
 		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		Point size = new Point();
@@ -69,82 +150,6 @@ public class GameLayoutManager {
 		// margins to make it look better
 		params.setMargins(10, 10, 0, 0);
 
-		// row that will be returned
-		TableRow row = new TableRow(context);
-
-		// centering buttons inside row
-		row.setGravity(Gravity.CENTER);
-
-		// exactly what function says, adding buttons to created TableRow
-		addButtonsToRow(row, params, actRow);
-
-		return row;
-
+		return params;
 	}
-
-	/**
-	 * Function is inflating buttons dynamically into <b> TableRow row</b>
-	 * according to number of columns and rows.
-	 * 
-	 * @param row
-	 *            Row, that will be inflated with buttons.
-	 * @param params
-	 *            Parameters of buttons.
-	 * @param actRow
-	 *            Row, that is being worked with
-	 */
-	@SuppressLint("NewApi")
-	private void addButtonsToRow(TableRow row, LayoutParams params, int actRow) {
-		for (int actColumn = 0; actColumn < Game.ROWS; actColumn++) {
-			Button button = new Button(context);
-
-			button.setLayoutParams(params);
-
-			// adding buttons to row
-			row.addView(button);
-
-			new Card(button, imagesList.get(nextRandomNumber()));
-		}
-
-	}
-
-	/**
-	 * This function creates TableLayout which contains all columns and rows
-	 * that gamefield contains.
-	 * 
-	 * @return TableLayout containing whole game field.
-	 */
-	public TableLayout createGameField() {
-		int actRow = 0;
-		cards = new Card[Game.COLUMNS][Game.ROWS];
-
-		// creating pair of random numbers for inserting images into their
-		// respective buttons
-		rand = new Integer[(Game.COLUMNS * Game.ROWS)];
-		for (int i = 0, j = 0; i < rand.length / 2; i++) {
-			rand[j++] = i;
-			rand[j++] = i;
-		}
-
-		Collections.shuffle(Arrays.asList(rand));
-
-		TableLayout gameField = new TableLayout(context);
-
-		// add TableRows into gameField TableLayout and incrementation of actRow
-		for (int i = 0; i < Game.COLUMNS; i++)
-			gameField.addView(createTableRow(actRow++));
-
-		gameField.setGravity(Gravity.CENTER);
-
-		return gameField;
-	}
-
-	public void setImagesList(List<Drawable> imagesList) {
-		this.imagesList = imagesList;
-	}
-
-	private int nextRandomNumber() {
-		return rand[randPos++];
-	}
-
 }

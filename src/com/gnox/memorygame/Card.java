@@ -10,6 +10,7 @@ import android.widget.Button;
  * Card class, which contains functions, that every card use.
  */
 public class Card {
+
 	// Button, that will be shown on UI
 	private Button button;
 
@@ -29,6 +30,23 @@ public class Card {
 				// same
 				if (!Game.cardManager.stop)
 					Game.cardManager.set(self);
+
+			}
+
+		});
+	}
+
+	public Card(Button button, int frontSideId) {
+		button.setBackground(Game.backSide);
+		this.button = button;
+		this.button.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// we need to set the card in Card Manager so that it can
+				// determine if cards were turned and then check if they are
+				// same
+				Game.cardManager.set(self);
+
 			}
 
 		});
@@ -69,12 +87,13 @@ public class Card {
 	/**
 	 * Disables the display button.
 	 */
-	public void disable() {
+	public void disable(boolean invisible) {
 		button.setEnabled(false);
-		button.setVisibility(View.INVISIBLE);
+		if (invisible)
+			button.setVisibility(View.INVISIBLE);
 	}
 
-	public void refresh() {
-		button.postInvalidate();
+	public Button getButton() {
+		return button;
 	}
 }
