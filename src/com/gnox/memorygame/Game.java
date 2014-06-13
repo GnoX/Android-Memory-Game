@@ -24,6 +24,7 @@ public class Game extends Activity {
 	private Timer T;
 	private int time;
 
+	private int frontImageId;
 	// Back side of Cards
 	public static Drawable backSide;
 
@@ -39,7 +40,7 @@ public class Game extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
 		initialize();
-		newGame(2, 2);
+		newGame(6, 4);
 
 	}
 
@@ -47,6 +48,7 @@ public class Game extends Activity {
 	 * Objects initialization
 	 */
 	private void initialize() {
+
 		imgLoader = new ImageLoader(getResources());
 
 		mainTable = (TableLayout) findViewById(R.id.mainTable);
@@ -65,7 +67,6 @@ public class Game extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent(Game.this, ScoreBoard.class);
-				finish();
 				startActivity(intent);
 			}
 		});
@@ -99,12 +100,11 @@ public class Game extends Activity {
 
 		cardManager.setCardsLeft(COLUMNS * ROWS);
 
-		imgLoader.setImageFrame(R.drawable.cards, 4, 4);
+		imgLoader.setImageFrame(getIntent().getExtras().getInt(MainMenu.DRAWABLE_ID_EXTRA), 4, 4);
 
 		for (int i = 0; i < 4; i++)
 			for (int j = 0; j < 4; j++)
-				if (!(i == 3 && j == 2 || j == 3))
-					imgLoader.addCroppedImage(i, j);
+				imgLoader.addCroppedImage(i, j);
 
 		layoutManager.setImagesList(imgLoader.getImageList());
 

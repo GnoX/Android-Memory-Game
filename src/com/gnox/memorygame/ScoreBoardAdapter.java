@@ -1,37 +1,47 @@
 package com.gnox.memorygame;
 
-import android.content.Context;
+import java.util.List;
+
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class ScoreBoardAdapter extends ArrayAdapter<String> {
-	private final Context context;
-	private final String[] values;
+public class ScoreBoardAdapter extends ArrayAdapter<Model> {
 
-	public ScoreBoardAdapter(Context context, String[] values) {
-		super(context, R.layout.scoreboard_row, values);
+	private final List<Model> list;
+	private final Activity context;
+
+	public ScoreBoardAdapter(Activity context, List<Model> list) {
+		super(context, R.layout.scoreboard_row, list);
 		this.context = context;
-		this.values = values;
+		this.list = list;
+	}
+
+	static class ViewHolder {
+		protected TextView text;
+		protected TextView time;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View rowView = inflater.inflate(R.layout.scoreboard_row, parent, false);
-		TextView scoreName = (TextView) rowView.findViewById(R.id.scoreName);
-		TextView scoreTime = (TextView) rowView.findViewById(R.id.scoreTime);
-		scoreName.setText(values[position]);
-		// Change the icon for Windows and iPhone
-		String s = values[position];
-		if (s.startsWith("Windows7") || s.startsWith("iPhone") || s.startsWith("Solaris")) {
-			scoreTime.setText("OK!");
-		} else {
-			scoreTime.setText("NOPE!");
-		}
+		View view = null;
+		if (convertView == null) {
+			LayoutInflater inflator = context.getLayoutInflater();
+			view = inflator.inflate(R.layout.scoreboard_row, null);
+			final ViewHolder viewHolder = new ViewHolder();
+			viewHolder.text = (TextView) view.findViewById(R.id.scoreName);
+			viewHolder.time = (TextView) view.findViewById(R.id.scoreTime);
 
-		return rowView;
+			view.setTag(viewHolder);
+			viewHolder.time.setTag(list.get(position));
+		}
+		ViewHolder holder = (ViewHolder) view.getTag();
+		holder.text.setText(list.get(position).getName());
+		holder.time.setText(list.get(position).getTime());
+		return view;
 	}
+
 }
