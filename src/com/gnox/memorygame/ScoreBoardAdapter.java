@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class ScoreBoardAdapter extends ArrayAdapter<Model> {
+public class ScoreBoardAdapter extends ArrayAdapter<ScoreHolder> {
 
-	private final List<Model> list;
+	private final List<ScoreHolder> list;
 	private final Activity context;
 
-	public ScoreBoardAdapter(Activity context, List<Model> list) {
+	public ScoreBoardAdapter(Activity context, List<ScoreHolder> list) {
 		super(context, R.layout.scoreboard_row, list);
 		this.context = context;
 		this.list = list;

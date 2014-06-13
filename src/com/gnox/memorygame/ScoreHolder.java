@@ -1,11 +1,11 @@
 package com.gnox.memorygame;
 
-public class Model {
+public class ScoreHolder {
 
 	private String name;
 	private String time;
 
-	public Model(String name, String time) {
+	public ScoreHolder(String name, String time) {
 		this.name = name;
 		this.time = time;
 	}

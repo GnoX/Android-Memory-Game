@@ -3,7 +3,8 @@
     android:id="@+id/rel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@drawable/abc_ab_stacked_solid_light_holo" >
 
     <TextView
         android:id="@+id/display"

@@ -8,5 +8,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="turn">Turns: 0</string>
     <string name="title_activity_score_board">ScoreBoard</string>
+    <string name="choose_image">Choose Image: </string>
 
 </resources>

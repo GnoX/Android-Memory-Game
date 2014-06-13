@@ -8,11 +8,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 
-public class MainMenu extends Activity implements OnClickListener {
+public class MainMenu extends Activity {
 
 	public static final String DRAWABLE_ID_EXTRA = "ID_EXTRA";
-	private int[] imageIds = { R.drawable.card1, R.drawable.card2, R.drawable.card3 };
+	private int[] imageIds = { R.drawable.card1, R.drawable.card2, R.drawable.card3, R.drawable.card4, R.drawable.card5 };
 
 	@SuppressLint("NewApi")
 	@Override
@@ -20,15 +21,22 @@ public class MainMenu extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
 
-		Button newGame = (Button) findViewById(R.id.mainMenuNewGameButton);
 		Button scoreBoard = (Button) findViewById(R.id.mainMenuScoreBoardButton);
 		LinearLayout scroll = (LinearLayout) findViewById(R.id.imageScrolling);
 
-		for (int i = 0; i < 3; i++) {
-			Button test = new Button(this);
-			test.setBackground(getResources().getDrawable(imageIds[i]));
-			test.setTag(imageIds[i]);
-			test.setOnClickListener(new OnClickListener() {
+		for (int i = 0; i < imageIds.length; i++) {
+			Button image = new Button(this);
+			image.setBackground(getResources().getDrawable(imageIds[i]));
+			image.setTag(imageIds[i]);
+
+			LayoutParams params = new LayoutParams((int) GameLayoutManager.convertPixelsToDp(this, 300),
+					(int) GameLayoutManager.convertPixelsToDp(this, 300));
+
+			params.setMargins(5, 5, 5, 5);
+
+			image.setLayoutParams(params);
+
+			image.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
@@ -37,12 +45,18 @@ public class MainMenu extends Activity implements OnClickListener {
 					startActivity(i);
 				}
 			});
-			
-			scroll.addView(test);
+
+			scroll.addView(image);
 		}
 
-		newGame.setOnClickListener(this);
-		scoreBoard.setOnClickListener(this);
+		scoreBoard.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent scoreboard = new Intent(MainMenu.this, ScoreBoard.class);
+				startActivity(scoreboard);
+			}
+		});
 	}
 
 	@Override
@@ -50,18 +64,4 @@ public class MainMenu extends Activity implements OnClickListener {
 		super.onPause();
 	}
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.mainMenuNewGameButton:
-			Intent newGame = new Intent(MainMenu.this, Game.class);
-			startActivity(newGame);
-			break;
-		case R.id.mainMenuScoreBoardButton:
-			Intent scoreboard = new Intent(MainMenu.this, ScoreBoard.class);
-			startActivity(scoreboard);
-			break;
-		}
-
-	}
 }

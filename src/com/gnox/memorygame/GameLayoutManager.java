@@ -133,16 +133,14 @@ public class GameLayoutManager {
 		// ratio is used to determine size of buttons
 		int ratio = width / height;
 
-		// getting density pixels other than normal pixels
-		final float scale = context.getResources().getDisplayMetrics().density;
 		int pixels;
 
 		// if ratio is 1, which means the screen is in land mode, then set
 		// button size to fit all the buttons inside screen
 		if (ratio == 1)
-			pixels = (int) ((height / (Game.COLUMNS + 1)) * scale + .5f);
+			pixels = (int) convertPixelsToDp(context, height / (Game.COLUMNS + 1));
 		else
-			pixels = (int) ((width / (Game.ROWS + 1)) * scale + .5f);
+			pixels = (int) convertPixelsToDp(context, width / (Game.ROWS + 1));
 
 		// setting buttons to be squares
 		LayoutParams params = new LayoutParams(pixels, pixels);
@@ -151,5 +149,12 @@ public class GameLayoutManager {
 		params.setMargins(10, 10, 0, 0);
 
 		return params;
+	}
+
+	public static float convertPixelsToDp(Context context, float pixels) {
+		// getting density pixels other than normal pixels
+		final float scale = context.getResources().getDisplayMetrics().density;
+		return pixels * scale + .5f;
+
 	}
 }

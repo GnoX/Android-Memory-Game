@@ -3,19 +3,18 @@
     android:id="@+id/mainTable"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/abc_ab_solid_dark_holo"
     tools:context="${packageName}.${activityClass}" >
 
-    <Button
-        android:id="@+id/mainMenuNewGameButton"
+    <TextView
+        android:id="@+id/imageChooseTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/new_game" />
-
-    <Button
-        android:id="@+id/mainMenuScoreBoardButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/score_board" />
+        android:gravity="center"
+        android:text="@string/choose_image"
+        android:textSize="30sp"
+        android:textColor="#FFFFFF"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView1"
@@ -29,8 +28,15 @@
             android:id="@+id/imageScrolling"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical" >
         </LinearLayout>
     </HorizontalScrollView>
+
+    <Button
+        android:id="@+id/mainMenuScoreBoardButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/score_board" />
 
 </TableLayout>

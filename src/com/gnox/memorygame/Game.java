@@ -23,8 +23,8 @@ public class Game extends Activity {
 	public static TextView display;
 	private Timer T;
 	private int time;
+	public static final String TIME_EXTRA = "TIME_EXTRA";
 
-	private int frontImageId;
 	// Back side of Cards
 	public static Drawable backSide;
 
@@ -57,7 +57,7 @@ public class Game extends Activity {
 
 		cardManager = new CardManager();
 
-		backSide = getResources().getDrawable(R.drawable.card1);
+		backSide = getResources().getDrawable(R.drawable.back);
 
 		display = (TextView) findViewById(R.id.display);
 
@@ -70,7 +70,9 @@ public class Game extends Activity {
 				startActivity(intent);
 			}
 		});
+	}
 
+	private void createTimer() {
 		T = new Timer();
 		T.scheduleAtFixedRate(new TimerTask() {
 			@Override
@@ -84,6 +86,20 @@ public class Game extends Activity {
 				});
 			}
 		}, 1000, 1000);
+
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		createTimer();
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		T.cancel();
+		T = null;
 	}
 
 	/**
@@ -170,6 +186,12 @@ public class Game extends Activity {
 					}
 				}, 1300);
 			}
+			
+			if(isGameOver()) {
+				Intent i = new Intent(Game.this, ScoreBoard.class);
+				i.putExtra(TIME_EXTRA, time);
+				startActivity(i);
+			}
 		}
 
 		public boolean isGameOver() {
@@ -180,5 +202,4 @@ public class Game extends Activity {
 			this.cardsLeft = cardsLeft;
 		}
 	}
-
 }
