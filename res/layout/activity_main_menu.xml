@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/choose_image"
-        android:textSize="30sp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FFFFFF"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="30sp" />
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView1"
@@ -28,8 +28,8 @@
             android:id="@+id/imageScrolling"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_vertical" >
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal" >
         </LinearLayout>
     </HorizontalScrollView>
 

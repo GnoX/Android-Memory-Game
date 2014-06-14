@@ -23,6 +23,7 @@ public class Game extends Activity {
 	public static TextView display;
 	private Timer T;
 	private int time;
+
 	public static final String TIME_EXTRA = "TIME_EXTRA";
 
 	// Back side of Cards
@@ -88,13 +89,13 @@ public class Game extends Activity {
 		}, 1000, 1000);
 
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		createTimer();
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -186,8 +187,8 @@ public class Game extends Activity {
 					}
 				}, 1300);
 			}
-			
-			if(isGameOver()) {
+
+			if (isGameOver()) {
 				Intent i = new Intent(Game.this, ScoreBoard.class);
 				i.putExtra(TIME_EXTRA, time);
 				startActivity(i);

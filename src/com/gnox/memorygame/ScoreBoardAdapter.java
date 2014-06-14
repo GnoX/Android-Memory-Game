@@ -37,6 +37,9 @@ public class ScoreBoardAdapter extends ArrayAdapter<ScoreHolder> {
 
 			view.setTag(viewHolder);
 			viewHolder.time.setTag(list.get(position));
+		} else {
+			view = convertView;
+			((ViewHolder) view.getTag()).time.setTag(list.get(position));
 		}
 		ViewHolder holder = (ViewHolder) view.getTag();
 		holder.text.setText(list.get(position).getName());

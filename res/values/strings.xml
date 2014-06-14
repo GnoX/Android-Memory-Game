@@ -9,5 +9,7 @@
     <string name="turn">Turns: 0</string>
     <string name="title_activity_score_board">ScoreBoard</string>
     <string name="choose_image">Choose Image: </string>
+    <string name="add">Add</string>
+    <string name="deleteAll">Wipe scoreboard</string>
 
 </resources>
