@@ -25,6 +25,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout.LayoutParams;
 
+//TODO documentation for this class
+
 public class ScoreBoard extends ListActivity {
 
 	public static final int LIST_ITEM_TYPE_1 = 1;
@@ -43,7 +45,7 @@ public class ScoreBoard extends ListActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		setContentView(R.layout.activity_score_board);
-		Intent i = getIntent();
+		final Intent i = getIntent();
 		Button deleteButton = (Button) findViewById(R.id.deleteButton);
 
 		if (i.hasExtra(Game.TIME_EXTRA)) {
@@ -66,8 +68,6 @@ public class ScoreBoard extends ListActivity {
 					v.setEnabled(false);
 					if (nameInputEditText.getText().toString().length() > 0)
 						name = nameInputEditText.getText().toString();
-
-					saveScoreToFile();
 					restart(true);
 				}
 			});
@@ -84,17 +84,21 @@ public class ScoreBoard extends ListActivity {
 				}
 			});
 		}
-
 		Button newGameButton = (Button) findViewById(R.id.scoreBoardNewGame);
-		newGameButton.setOnClickListener(new OnClickListener() {
+		if (!i.hasExtra("MAIN_MENU")) {
+			newGameButton.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				saveScores(true);
-				finish();
-				startActivity(new Intent(ScoreBoard.this, Game.class));
-			}
-		});
+				@Override
+				public void onClick(View v) {
+					saveScores(i.hasExtra(Game.TIME_EXTRA));
+					finish();
+					startActivity(new Intent(ScoreBoard.this, Game.class));
+				}
+			});
+		} else {
+			newGameButton.setEnabled(false);
+			newGameButton.setVisibility(View.INVISIBLE);
+		}
 
 		ScoreBoardAdapter adapter = new ScoreBoardAdapter(this, getModel());
 		setListAdapter(adapter);
@@ -112,6 +116,12 @@ public class ScoreBoard extends ListActivity {
 				String[] parts = s.split("-");
 				if (parts.length > 1)
 					list.add(get(parts[0], parts[1]));
+			}
+
+			if (newTime != null) {
+				ScoreHolder newEntry = get("You", "" + newTime);
+				newEntry.setNew(true);
+				list.add(newEntry);
 			}
 
 			Collections.sort(list, new Comparator<ScoreHolder>() {
@@ -211,7 +221,7 @@ public class ScoreBoard extends ListActivity {
 	}
 
 	private void saveScores(boolean save) {
-		if (!save && newTime != null)
+		if (save && newTime != null)
 			saveScoreToFile();
 	}
 }

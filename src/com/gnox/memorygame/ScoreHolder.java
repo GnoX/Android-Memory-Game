@@ -4,6 +4,7 @@ public class ScoreHolder {
 
 	private String name;
 	private String time;
+	private boolean isNew = false;
 
 	public ScoreHolder(String name, String time) {
 		this.name = name;
@@ -25,6 +26,14 @@ public class ScoreHolder {
 	public void setText(String string) {
 		this.time = string;
 
+	}
+
+	public void setNew(boolean isNew) {
+		this.isNew = isNew;
+	}
+
+	public boolean isNew() {
+		return isNew;
 	}
 
 }

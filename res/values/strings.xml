@@ -12,5 +12,6 @@
     <string name="add">Add</string>
     <string name="deleteAll">Wipe scoreboard</string>
     <string name="enter_name">Enter your name</string>
+    <string name="your_time">Your time: 0</string>
 
 </resources>

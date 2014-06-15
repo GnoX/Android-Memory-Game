@@ -56,6 +56,7 @@ public class MainMenu extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				Intent scoreboard = new Intent(MainMenu.this, ScoreBoard.class);
+				scoreboard.putExtra("MAIN_MENU", true);
 				startActivity(scoreboard);
 			}
 		});

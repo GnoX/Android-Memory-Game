@@ -43,7 +43,7 @@ public class Game extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
 		initialize();
-		newGame(2, 2);
+		newGame(6, 4);
 
 	}
 
