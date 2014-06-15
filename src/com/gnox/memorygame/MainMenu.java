@@ -14,7 +14,8 @@ public class MainMenu extends Activity {
 
 	public static final String DRAWABLE_ID_EXTRA = "ID_EXTRA";
 	public static int chosenCard = 0;
-	private int[] imageIds = { R.drawable.card1, R.drawable.card2, R.drawable.card3, R.drawable.card4, R.drawable.card5 };
+	private int[] imageIds = { R.drawable.card1, R.drawable.card2, R.drawable.card3, R.drawable.card4,
+			R.drawable.card5, R.drawable.card6, R.drawable.card7 };
 
 	@SuppressLint("NewApi")
 	@Override
@@ -30,8 +31,8 @@ public class MainMenu extends Activity {
 			image.setBackground(getResources().getDrawable(imageIds[i]));
 			image.setTag(imageIds[i]);
 
-			LayoutParams params = new LayoutParams((int) GameLayoutManager.convertPixelsToDp(this, 300),
-					(int) GameLayoutManager.convertPixelsToDp(this, 300));
+			LayoutParams params = new LayoutParams((int) GameLayoutManager.convertPixelsToDp(this, 100),
+					(int) GameLayoutManager.convertPixelsToDp(this, 100));
 
 			params.setMargins(5, 5, 5, 5);
 

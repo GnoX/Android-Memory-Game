@@ -239,8 +239,10 @@ int drawable card2 0x7f02005a
 int drawable card3 0x7f02005b
 int drawable card4 0x7f02005c
 int drawable card5 0x7f02005d
-int drawable ic_launcher 0x7f02005e
-int drawable icon 0x7f02005f
+int drawable card6 0x7f02005e
+int drawable card7 0x7f02005f
+int drawable ic_launcher 0x7f020060
+int drawable icon 0x7f020061
 int id LinearLayout1 0x7f05004e
 int id action_bar 0x7f05001c
 int id action_bar_activity_content 0x7f050015

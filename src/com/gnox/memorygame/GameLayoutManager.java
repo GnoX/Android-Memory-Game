@@ -138,9 +138,9 @@ public class GameLayoutManager {
 		// if ratio is 1, which means the screen is in land mode, then set
 		// button size to fit all the buttons inside screen
 		if (ratio == 1)
-			pixels = (int) convertPixelsToDp(context, height / (Game.COLUMNS + 1));
+			pixels = (int) height / (Game.COLUMNS + 4);
 		else
-			pixels = (int) convertPixelsToDp(context, width / (Game.ROWS + 1));
+			pixels = (int) width / (Game.ROWS + 4);
 
 		// setting buttons to be squares
 		LayoutParams params = new LayoutParams(pixels, pixels);

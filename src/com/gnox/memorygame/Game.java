@@ -122,10 +122,21 @@ public class Game extends Activity {
 		int frontCardImageId = getIntent().hasExtra(MainMenu.DRAWABLE_ID_EXTRA) ? getIntent().getExtras().getInt(
 				MainMenu.DRAWABLE_ID_EXTRA) : MainMenu.chosenCard;
 
-		imgLoader.setImageFrame(frontCardImageId, 4, 4);
+		imgLoader.setImageFrame(frontCardImageId, 3, 4);
 
-		for (int i = 0; i < 4; i++)
-			for (int j = 0; j < 4; j++)
+		int w, h;
+
+		switch (frontCardImageId) {
+		case R.drawable.card7:
+			w = 3;
+			h = 4;
+		default:
+			w = 4;
+			h = 3;
+		}
+
+		for (int i = 0; i < w; i++)
+			for (int j = 0; j < h; j++)
 				imgLoader.addCroppedImage(i, j);
 
 		layoutManager.setImagesList(imgLoader.getImageList());
