@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:id="@+id/mainScoreBoardLayout" >
 
     <TableRow
         android:id="@+id/editTable"
@@ -24,7 +25,12 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:enabled="false"
-            android:visibility="invisible" />
+            android:hint="@string/enter_name"
+            android:inputType="textPersonName"
+            android:visibility="invisible" >
+
+            <requestFocus />
+        </EditText>
     </TableRow>
 
     <ListView
@@ -37,12 +43,27 @@
         android:layout_weight="5" >
     </ListView>
 
-    <Button
-        android:id="@+id/deleteButton"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/deleteAll" />
+        android:layout_weight="1" >
+
+        <Button
+            android:id="@+id/deleteButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/deleteAll" />
+
+        <Button
+            android:id="@+id/scoreBoardNewGame"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="@string/new_game" />
+    </TableRow>
 
 </LinearLayout>

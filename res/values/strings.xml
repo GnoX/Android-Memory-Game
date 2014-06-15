@@ -11,5 +11,6 @@
     <string name="choose_image">Choose Image: </string>
     <string name="add">Add</string>
     <string name="deleteAll">Wipe scoreboard</string>
+    <string name="enter_name">Enter your name</string>
 
 </resources>

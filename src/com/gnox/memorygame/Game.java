@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+// TODO add settings
+
 public class Game extends Activity {
 
 	private GameLayoutManager layoutManager;
@@ -41,7 +43,7 @@ public class Game extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
 		initialize();
-		newGame(6, 4);
+		newGame(2, 2);
 
 	}
 
@@ -117,7 +119,10 @@ public class Game extends Activity {
 
 		cardManager.setCardsLeft(COLUMNS * ROWS);
 
-		imgLoader.setImageFrame(getIntent().getExtras().getInt(MainMenu.DRAWABLE_ID_EXTRA), 4, 4);
+		int frontCardImageId = getIntent().hasExtra(MainMenu.DRAWABLE_ID_EXTRA) ? getIntent().getExtras().getInt(
+				MainMenu.DRAWABLE_ID_EXTRA) : MainMenu.chosenCard;
+
+		imgLoader.setImageFrame(frontCardImageId, 4, 4);
 
 		for (int i = 0; i < 4; i++)
 			for (int j = 0; j < 4; j++)
@@ -191,6 +196,7 @@ public class Game extends Activity {
 			if (isGameOver()) {
 				Intent i = new Intent(Game.this, ScoreBoard.class);
 				i.putExtra(TIME_EXTRA, time);
+				finish();
 				startActivity(i);
 			}
 		}
@@ -202,5 +208,6 @@ public class Game extends Activity {
 		public void setCardsLeft(int cardsLeft) {
 			this.cardsLeft = cardsLeft;
 		}
+
 	}
 }

@@ -13,6 +13,7 @@ import android.widget.LinearLayout.LayoutParams;
 public class MainMenu extends Activity {
 
 	public static final String DRAWABLE_ID_EXTRA = "ID_EXTRA";
+	public static int chosenCard = 0;
 	private int[] imageIds = { R.drawable.card1, R.drawable.card2, R.drawable.card3, R.drawable.card4, R.drawable.card5 };
 
 	@SuppressLint("NewApi")
@@ -41,6 +42,7 @@ public class MainMenu extends Activity {
 				@Override
 				public void onClick(View v) {
 					Intent i = new Intent(MainMenu.this, Game.class);
+					chosenCard = (int) v.getTag();
 					i.putExtra(DRAWABLE_ID_EXTRA, (int) v.getTag());
 					startActivity(i);
 				}
